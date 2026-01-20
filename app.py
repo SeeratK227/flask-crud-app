@@ -63,5 +63,14 @@ def delete_task(task_id):
     db.session.commit()
     return redirect('/')
 
+@app.route('/edit/<int:task_id>', methods=['GET', 'POST'])
+def edit_task(task_id):
+    task = Task.query.get_or_404(task_id)
+    if request.method == 'POST':
+        task.title = request.form['title']
+        db.session.commit()
+        return redirect('/')
+    return render_template('edit.html', task=task)
+
 if __name__ == '__main__':
     app.run(debug=True)
