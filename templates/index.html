@@ -18,11 +18,16 @@
         <a href="/?filter=completed">Completed Tasks</a>
     </div>
 
+    <div>
+        <p>Total Tasks: {{ taskcount }}</p>
+    </div>
+
     <ul>
         {% for task in tasks %}
             <li>
                 {{ task.title }}
                 [Completed: {{ 'Yes' if task.completed else 'No' }}]
+                <a href="/edit/{{ task.id }}">✏️</a>
                 <a href="/delete/{{ task.id }}">❌</a>
                 <a href="/complete/{{ task.id }}">✅</a>
             </li>

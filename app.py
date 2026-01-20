@@ -29,7 +29,7 @@ with app.app_context():
 @app.route("/")
 def index():
     filter_type = request.args.get("filter")
-
+    taskcount = Task.query.count()
     if filter_type == "completed":
         tasks = Task.query.filter_by(completed=True).all()
     elif filter_type == "uncompleted":
@@ -37,7 +37,7 @@ def index():
     else:
         tasks = Task.query.all()
 
-    return render_template("index.html", tasks=tasks, filter_type=filter_type)
+    return render_template("index.html", tasks=tasks, filter_type=filter_type, taskcount=taskcount)
 
 
 
