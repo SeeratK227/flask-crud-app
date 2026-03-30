@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask To-Do App</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="heading">To-Do List</h1>
+        <p class="subtitle">Stay organized and keep track of your tasks</p>
+
+        <form action="/add" method="post" class="task-form">
+            <input type="text" name="title" placeholder="Enter a new task..." required>
+            <button type="submit">Add Task</button>
+        </form>
+
+        <div class="filter-bar">
+            <a href="/">All Tasks</a>
+            <a href="/?filter=uncompleted">Uncompleted</a>
+            <a href="/?filter=completed">Completed</a>
+        </div>
+
+        <div class="stats-card">
+            Total Tasks: {{ taskcount }}
+        </div>
+
+        <ul class="task-list">
+            {% for task in tasks %}
+            <li class="task-item {% if task.completed %}completed{% endif %}">
+                <div class="task-left">
+                    <span class="task-title">{{ task.title }}</span>
+                    <span class="task-status">
+                        {% if task.completed %}
+                        Completed
+                        {% else %}
+                        Not completed yet
+                        {% endif %}
+                    </span>
+                </div>
+
+                <div class="task-actions">
+                    <a class="action-btn edit" href="/edit/{{ task.id }}">Edit</a>
+                    <a class="action-btn delete" href="/delete/{{ task.id }}">Delete</a>
+                    {% if not task.completed %}
+                    <a class="action-btn complete" href="/complete/{{ task.id }}">Complete</a>
+                    {% endif %}
+                </div>
+            </li>
+            {% else %}
+            <li class="empty-state">No tasks yet. Add your first one above.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+
+</html>
